@@ -1,7 +1,7 @@
 # Cpp17Windows-MemoryHelper
 This is a simple class to read/write memory with Win32 API.
 
-Example of usage:
+Example of usage(No error checking):
 ```cpp
 struct Vec3
 {
@@ -17,4 +17,12 @@ uintptr_t MiD = *MemoryHelper::GetModuleAddress(L"some_module.dll",PiD);
 void* handle = *MemoryHelper::OpenProcess(PROCESS_VM_READ,false,PiD);
 Vec3 value = *MemoryHelper::Read<Vec3>(handle,MiD + 0xFFF69);
 CloseHandle(handle);
+```
+For error checking, take a look at std::optional. Most functions return std::optional.
+```cpp
+std::optional<uint32_t> PiD = MemoryHelper::GetProcessId(L"some_process.exe"); 
+if(PiD)
+{
+  // Do stuff
+}
 ```
